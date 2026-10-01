@@ -1,0 +1,23 @@
+{
+  "name": "planejadorfinanceiro",
+  "version": "1.0.0",
+  "description": "Planejador Financeiro Mensal Pessoal",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

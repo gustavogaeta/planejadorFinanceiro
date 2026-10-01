@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Mes {
+  id           Int      @id @default(autoincrement())
+  mes          Int
+  ano          Int
+  renda        Float    @default(0)
+  metaEconomia Float    @default(0)
+  criadoEm     DateTime @default(now())
+  gastos       Gasto[]
+
+  @@unique([mes, ano])
+}
+
+model Gasto {
+  id        Int      @id @default(autoincrement())
+  descricao String
+  valor     Float
+  categoria String
+  data      DateTime
+  mesId     Int
+  mes       Mes      @relation(fields: [mesId], references: [id])
+}
+
+model Caixinha {
+  id           Int                    @id @default(autoincrement())
+  nome         String
+  objetivo     String?
+  valorAtual   Float                  @default(0)
+  metaValor    Float?
+  criadoEm     DateTime               @default(now())
+  movimentacoes MovimentacaoCaixinha[]
+}
+
+model MovimentacaoCaixinha {
+  id         Int      @id @default(autoincrement())
+  caixinhaId Int
+  tipo       String   // "entrada" ou "saida"
+  valor      Float
+  descricao  String?
+  data       DateTime @default(now())
+  caixinha   Caixinha @relation(fields: [caixinhaId], references: [id])
+}

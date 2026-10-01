@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finan — Planejador Financeiro</title>
+  <meta name="description" content="Planejador financeiro mensal pessoal — controle seus gastos, defina metas e organize seu dinheiro." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- ─── MOBILE HEADER (Aparece apenas no celular) ──────────────────────── -->
+  <header class="mobile-header">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 20V8M12 8L7 13M12 8L17 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-name">Finan</span>
+    </div>
+    <button class="hamburger-btn" id="btn-hamburger">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ─── SIDEBAR OVERLAY (Mobile) ───────────────────────────────────────── -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ─── SIDEBAR ────────────────────────────────────────────────────────── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <!-- Ícone folha/seta para cima — representa crescimento financeiro -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 20V8M12 8L7 13M12 8L17 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="logo-name">Finan</span>
+    </div>
+
+    <div class="sidebar-nav">
+      <button class="nav-btn active" data-section="dashboard" id="nav-dashboard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Visão geral
+      </button>
+      <button class="nav-btn" data-section="gastos" id="nav-gastos">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        Gastos
+      </button>
+      <button class="nav-btn" data-section="caixinhas" id="nav-caixinhas">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+        Caixinhas
+      </button>
+      <button class="nav-btn" data-section="historico" id="nav-historico">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Histórico
+      </button>
+      <button class="nav-btn" data-section="configuracoes" id="nav-configuracoes">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Configurações
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <button class="nav-btn theme-toggle" id="btn-theme-toggle">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        Tema escuro
+      </button>
+    </div>
+  </nav>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- ══════════════════════════ DASHBOARD ══════════════════════════════ -->
+    <section class="section active" id="section-dashboard">
+      <div class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title" id="dashboard-titulo">Visão geral</h1>
+          <p class="page-subtitle" id="dashboard-subtitulo">Selecione ou crie um mês para começar</p>
+        </div>
+        <div class="header-actions">
+          <div class="mes-selector">
+            <select id="mes-select"><option value="">Carregando...</option></select>
+          </div>
+          <button class="btn btn-primary" id="btn-novo-mes">+ Novo mês</button>
+        </div>
+      </div>
+
+      <!-- Insight / mensagem contextual -->
+      <div id="mensagem-financeira" class="insight-box" style="display:none"></div>
+
+      <!-- Área principal: overview unificado -->
+      <div class="overview" id="overview-principal">
+        <!-- Guardado — destaque -->
+        <div class="overview-featured overview-item">
+          <div class="overview-label">Você guardou este mês</div>
+          <div class="overview-value" id="card-guardado">R$ 0,00</div>
+          <div class="overview-note" id="overview-guardado-note">—</div>
+          <div class="meta-row">
+            <span class="meta-label" id="sub-meta">Meta: —</span>
+            <span class="meta-pct" id="meta-pct-label">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-guardado" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Renda -->
+        <div class="overview-item">
+          <div class="overview-label">Renda</div>
+          <div class="overview-value muted" id="card-renda">R$ 0,00</div>
+        </div>
+        <!-- Gastos -->
+        <div class="overview-item">
+          <div class="overview-label">Gastos no mês</div>
+          <div class="overview-value" id="card-gastos">R$ 0,00</div>
+          <div class="overview-note" id="sub-pct-gasto">—</div>
+        </div>
+        <!-- Disponível -->
+        <div class="overview-item">
+          <div class="overview-label">Disponível para gastar</div>
+          <div class="overview-value" id="card-disponivel">R$ 0,00</div>
+        </div>
+      </div>
+
+      <!-- Caixinhas no dashboard -->
+      <h2 class="section-heading">Caixinhas</h2>
+      <div class="caixinhas-list" id="caixinhas-dashboard">
+        <div class="empty" style="padding:20px">Nenhuma caixinha criada ainda.</div>
+      </div>
+
+      <!-- Totais caixinhas -->
+      <div class="summary-strip" id="summary-strip">
+        <div class="summary-strip-item">
+          <div class="strip-label">Disponível livre</div>
+          <div class="strip-value" id="card-disponivel-livre">R$ 0,00</div>
+        </div>
+        <div class="summary-strip-item">
+          <div class="strip-label">Nas caixinhas</div>
+          <div class="strip-value teal" id="card-total-caixinhas">R$ 0,00</div>
+        </div>
+        <div class="summary-strip-item">
+          <div class="strip-label">Total organizado</div>
+          <div class="strip-value green" id="card-total-organizado">R$ 0,00</div>
+        </div>
+      </div>
+
+      <!-- Gastos por categoria -->
+      <h2 class="section-heading">Gastos por categoria</h2>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart" id="grafico-categorias">
+          <div class="empty">Sem gastos no mês</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════ GASTOS ══════════════════════════════════ -->
+    <section class="section" id="section-gastos">
+      <div class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Gastos</h1>
+          <p class="page-subtitle">Registre e acompanhe seus gastos do mês</p>
+        </div>
+        <div class="mes-selector">
+          <select id="mes-select-gastos"></select>
+        </div>
+      </div>
+
+      <!-- Formulário de adição -->
+      <div class="form-card">
+        <p class="form-title">Adicionar gasto</p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="gasto-descricao">Descrição</label>
+            <input type="text" id="gasto-descricao" placeholder="Ex: Almoço no centro" />
+          </div>
+          <div class="form-group">
+            <label for="gasto-valor">Valor</label>
+            <input type="number" id="gasto-valor" placeholder="0,00" min="0.01" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label for="gasto-categoria">Categoria</label>
+            <select id="gasto-categoria">
+              <option value="Alimentação">Alimentação</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Compras">Compras</option>
+              <option value="Educação">Educação</option>
+              <option value="Academia">Academia</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="gasto-data">Data</label>
+            <input type="date" id="gasto-data" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-add-gasto">Adicionar gasto</button>
+        </div>
+      </div>
+
+      <!-- Tabela de gastos -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Valor</th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody id="tabela-gastos">
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  <div class="empty-state-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  </div>
+                  <p class="empty-state-title">Sem gastos no mês</p>
+                  <p class="empty-state-desc">Adicione seu primeiro gasto para começar a acompanhar seu orçamento.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════ CAIXINHAS ═══════════════════════════════ -->
+    <section class="section" id="section-caixinhas">
+      <div class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Caixinhas</h1>
+          <p class="page-subtitle">Organize seu dinheiro por objetivo</p>
+        </div>
+        <button class="btn btn-primary" id="btn-nova-caixinha">+ Nova caixinha</button>
+      </div>
+
+      <div class="caixinhas-page-grid" id="caixinhas-lista">
+        <div class="empty" style="padding:32px">Nenhuma caixinha criada. Crie sua primeira.</div>
+      </div>
+
+      <h2 class="section-heading">Movimentações recentes</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Caixinha</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-movimentacoes">
+            <tr><td colspan="5" class="empty">Sem movimentações</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════ HISTÓRICO ═══════════════════════════════ -->
+    <section class="section" id="section-historico">
+      <div class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Histórico</h1>
+          <p class="page-subtitle">Acompanhe sua evolução financeira mês a mês</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Mês</th>
+              <th>Renda</th>
+              <th>Gastos</th>
+              <th>Guardado</th>
+              <th>Meta</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-historico">
+            <tr><td colspan="6" class="empty">Nenhum mês registrado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="section-heading">Evolução — dinheiro guardado</h2>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart" id="grafico-historico">
+          <div class="empty">Sem dados para exibir</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════ CONFIGURAÇÕES ═══════════════════════════ -->
+    <section class="section" id="section-configuracoes">
+      <div class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Configurações</h1>
+          <p class="page-subtitle">Ajuste a renda e a meta do mês selecionado</p>
+        </div>
+      </div>
+
+      <div class="form-card" style="max-width:480px">
+        <p class="form-title">Mês atual</p>
+        <p class="cfg-mes-label" id="cfg-mes-info">Nenhum mês selecionado.</p>
+        <div class="form-grid" style="grid-template-columns:1fr 1fr">
+          <div class="form-group">
+            <label for="cfg-renda">Renda mensal (R$)</label>
+            <input type="number" id="cfg-renda" placeholder="0,00" min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label for="cfg-meta">Meta de economia (R$)</label>
+            <input type="number" id="cfg-meta" placeholder="0,00" min="0" step="0.01" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-salvar-cfg">Salvar alterações</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ─── MODAL NOVO MÊS ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-novo-mes">
+  <div class="modal">
+    <h2 class="modal-title">Novo mês</h2>
+    <div class="form-grid" style="grid-template-columns:1fr 1fr; margin-bottom:14px">
+      <div class="form-group">
+        <label for="nm-mes">Mês</label>
+        <select id="nm-mes">
+          <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+          <option value="3">Março</option><option value="4">Abril</option>
+          <option value="5">Maio</option><option value="6">Junho</option>
+          <option value="7">Julho</option><option value="8">Agosto</option>
+          <option value="9">Setembro</option><option value="10">Outubro</option>
+          <option value="11">Novembro</option><option value="12">Dezembro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="nm-ano">Ano</label>
+        <input type="number" id="nm-ano" value="2026" min="2020" max="2099" />
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label for="nm-renda">Renda mensal (R$)</label>
+      <input type="number" id="nm-renda" placeholder="0,00" min="0" step="0.01" />
+    </div>
+    <div class="form-group">
+      <label for="nm-meta">Meta de economia (R$)</label>
+      <input type="number" id="nm-meta" placeholder="0,00" min="0" step="0.01" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-cancelar-mes">Cancelar</button>
+      <button class="btn btn-primary" id="btn-confirmar-mes">Criar mês</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MODAL NOVA CAIXINHA ─────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-nova-caixinha">
+  <div class="modal">
+    <h2 class="modal-title">Nova caixinha</h2>
+    <div class="form-group" style="margin-bottom:14px">
+      <label for="nc-nome">Nome</label>
+      <input type="text" id="nc-nome" placeholder="Ex: Viagem, Celular, Reserva..." />
+      <div class="sugestoes-wrap">
+        <button class="sugestao-btn" data-val="Reserva de emergência">Reserva</button>
+        <button class="sugestao-btn" data-val="Objetivo">Objetivo</button>
+        <button class="sugestao-btn" data-val="Lazer">Lazer</button>
+        <button class="sugestao-btn" data-val="Compras">Compras</button>
+        <button class="sugestao-btn" data-val="Viagem">Viagem</button>
+        <button class="sugestao-btn" data-val="Estudos">Estudos</button>
+        <button class="sugestao-btn" data-val="Investimentos">Investimentos</button>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <label for="nc-objetivo">Objetivo (opcional)</label>
+      <input type="text" id="nc-objetivo" placeholder="Para que serve essa caixinha?" />
+    </div>
+    <div class="form-group">
+      <label for="nc-meta">Meta de valor (R$) — opcional</label>
+      <input type="number" id="nc-meta" placeholder="0,00" min="0" step="0.01" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-cancelar-caixinha">Cancelar</button>
+      <button class="btn btn-primary" id="btn-confirmar-caixinha">Criar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MODAL MOVIMENTAR CAIXINHA ────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-movimentar">
+  <div class="modal">
+    <h2 class="modal-title" id="modal-mov-title">Movimentar caixinha</h2>
+    <input type="hidden" id="mov-caixinha-id" />
+    <input type="hidden" id="mov-tipo" />
+    <div class="form-group" style="margin-bottom:14px">
+      <label for="mov-valor">Valor (R$)</label>
+      <input type="number" id="mov-valor" placeholder="0,00" min="0.01" step="0.01" />
+    </div>
+    <div class="form-group">
+      <label for="mov-descricao">Descrição (opcional)</label>
+      <input type="text" id="mov-descricao" placeholder="Ex: Parte do salário de outubro" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-cancelar-mov">Cancelar</button>
+      <button class="btn btn-primary" id="btn-confirmar-mov">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST ────────────────────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
