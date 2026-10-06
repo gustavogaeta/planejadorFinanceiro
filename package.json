@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node src/server.js"
+    "dev": "node src/server.js",
+    "prisma:generate": "prisma generate",
+    "build": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -19,13 +21,6 @@
   },
   "devDependencies": {
     "prisma": "^5.22.0"
-  },
-
-"scripts": {
-  "dev": "node src/server.js",
-  "start": "node src/server.js",
-  "prisma:generate": "prisma generate"
-}
-
+  }
 }
 
